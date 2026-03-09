@@ -1,0 +1,1 @@
+import '../../css/admin/attendance-detail.css';
