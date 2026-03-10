@@ -1,0 +1,13 @@
+.header{
+    background-color: black;
+}
+.main{
+    background-color: white;
+}
+.header__inner {
+    margin:0px;
+    padding: 0px 10px;
+    height:80px;
+    display:flex;
+    align-items: center;
+}

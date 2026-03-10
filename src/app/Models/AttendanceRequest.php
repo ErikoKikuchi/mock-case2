@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class AttendanceRequest extends Model
 {
@@ -18,6 +19,9 @@ class AttendanceRequest extends Model
         'approved_by',
         'approved_at',
     ];
+
+    protected $casts = ['approved_at' => 'datetime'];
+
 //リレーション
     public function user()
     {
@@ -35,14 +39,15 @@ class AttendanceRequest extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
 
-//申請中・承認済
-public function getIsPendingAttribute(): bool
-{
-    return $this->status === 'pending';
-}
-
-public function getIsApprovedAttribute(): bool
-{
-    return $this->status === 'approved';
-}
+//ステータスラベル
+    protected function statusLabel(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => match($this->status) {
+                'pending'  => '申請中',
+                'approved' => '承認済',
+                default    => '不明',
+            }
+        );
+    }
 }

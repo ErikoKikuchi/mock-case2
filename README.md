@@ -65,8 +65,8 @@
 　　②スタッフ一覧→各スタッフの勤怠一覧→詳細ボタン押下→申請画面  
 　　③申請一覧（承認待ち・承認済）→詳細ボタン押下→承認画面→承認ボタンを押すと承認済へ変更  
 - 管理者ユーザーおよび一般ユーザー各１名用意済  
-　　①管理者　email:admin@example.com  password:adminpass  
-　　②一般ユーザー　email:user@example.com  password:password  
+　　①管理者　name:admin user ,email:admin@example.com ,password:adminpass  
+　　②一般ユーザー　name:test user ,email:user@example.com, password:password  
   
 ## テスト用には下記の通り環境構築  
 - mysqlコンテナにrootユーザーでログインし'demo_test'データベースを作成  

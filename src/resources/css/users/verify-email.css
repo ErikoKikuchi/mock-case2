@@ -1,0 +1,31 @@
+.container{
+    max-width:1320px;
+}
+.verify-email__form{
+    max-width:680px;
+    margin:200px auto 20px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+.verify-email__message{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom:50px;
+}
+.verify-email__main-sentence{
+    font-weight: bold;
+}
+.verification-form__submit{
+    border: 1px solid #5F5F5F;
+    background-color: #d9d9d9;
+    padding:10px 20px;
+    border-radius: 5px;
+    margin-bottom:50px;
+    font-weight: bold;
+}
+.verification-form__resend{
+    color: #0073CC;
+}

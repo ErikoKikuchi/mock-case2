@@ -18,6 +18,11 @@ class RequestItem extends Model
         'after_value',
     ];
 
+    protected $casts = [
+        'before_value' => 'datetime',
+        'after_value'  => 'datetime',
+    ];
+
     //リレーション
     public function request()
     {
