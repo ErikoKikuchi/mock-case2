@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'mailtrap' => [
+        'sandbox_url' => env('MAILTRAP_SANDBOX_URL'),
+    ],
 ];

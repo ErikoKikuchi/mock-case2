@@ -16,18 +16,19 @@
             </div>
             <nav class = "nav">
                 @auth
-                    @if(auth()->user()->role === 'admin')
+                    @if(auth()->user()->role === 'admin' && auth()->user()->hasVerifiedEmail())
                         <a href="">勤怠一覧</a>
                         <a href="">スタッフ一覧</a>
                         <a href="">申請一覧</a>
                         <a href="">ログアウト</a>
-                    @else
+                    @elseif(auth()->user()->role === 'user' && auth()->user()->hasVerifiedEmail())
                         <a href="">勤怠</a>
                         <a href="">勤怠一覧</a>
                         <a href="">申請</a>
                         <a href="">ログアウト</a>
                     @endif
-                    @else
+                @else
+                    <!-- 未ログイン時は何も表示しない -->
                 @endauth
             </nav>
         </header>

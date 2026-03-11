@@ -11,9 +11,14 @@ class LoginResponse implements LoginResponseContract
         $user = $request->user();
 
         if ($user->role === 'admin') {
-            return redirect('/admin/attendance/list');
+            return redirect()->route('attendance.list');
         }
 
-        return redirect('/attendance');
+        // メール未認証
+        if (!$user->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+
+        return redirect()->route('attendance.show');
     }
 }

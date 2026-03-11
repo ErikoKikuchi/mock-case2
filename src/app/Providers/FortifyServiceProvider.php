@@ -14,6 +14,7 @@ use App\Http\Responses\LoginResponse;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\LoginRequest;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -48,17 +49,16 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)->by($throttleKey);
         });
-
         Fortify::authenticateUsing(function (Request $request) {
+            app(LoginRequest::class);
+
             $user = User::where('email', $request->email)->first();
-            if ($request->is('admin/*') && $user->role !== 'admin') {
-                throw ValidationException::withMessages([
-                    Fortify::username() => ['一般ユーザーの方は通常のログイン画面からログインしてください。'],
-                ]);
-            }
+
             if ($user && Hash::check($request->password, $user->password)) {
                 return $user;
             }
+
+            return null;
         });
     }
 }

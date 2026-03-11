@@ -34,21 +34,21 @@ class DatabaseSeeder extends Seeder
                 $attendance =Attendance::factory()
                     ->forDate($date)
                     ->create(['user_id' => $user->id]);
-            }
 
             // 休憩パターン振り分け
             $pattern = fake()->randomElement(['none', 'one', 'two']);
             if ($pattern === 'one') {
                 BreakTime::factory()
-                    ->firstBreak(Carbon::parse($attendance->clock_in))
+                    ->firstBreak($attendance->clock_in)
                     ->create(['attendance_id' => $attendance->id]);
             }
             if ($pattern === 'two') {
-                BreakTime::factory()->firstBreak(Carbon::parse($attendance->clock_in))
+                BreakTime::factory()->firstBreak($attendance->clock_in)
                     ->create(['attendance_id' => $attendance->id]);
-                BreakTime::factory()->secondBreak(Carbon::parse($attendance->clock_in))
+                BreakTime::factory()->secondBreak($attendance->clock_in)
                     ->create(['attendance_id' => $attendance->id]);
-            }
+            }}
+
             // 申請データ（トランザクション）
             // 過去データの一部に申請を作成
             if (fake()->boolean(30)) {
