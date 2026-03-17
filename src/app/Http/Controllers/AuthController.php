@@ -10,6 +10,7 @@ use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
+use Carbon\Carbon;
 
 
 class AuthController extends Controller
@@ -33,7 +34,16 @@ class AuthController extends Controller
         ->with('breakTimes')
         ->first();
 
-        return view('attendance.index', compact('user','attendance'));
+        if(!$attendance){
+            $status='勤務外';
+            $attendanceButtons=['出勤'];
+        }else{
+            $status=$attendance->status;
+            $attendanceButtons=$attendance->attendanceButton;
+        }
+        $date=Carbon::now()->locale('ja');
+
+        return view('attendance.index', compact('user','attendance','status','date','attendanceButtons'));
     }
     public function index(Request $request){
         $user=Auth::user();
@@ -61,5 +71,43 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         return redirect()->route('attendance.list');
+    }
+    public function login(LoginRequest $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (!Auth::attempt($credentials)) {
+            return back()
+                ->withErrors(['email' => 'ログイン情報が登録されていません'])
+                ->onlyInput('email');
+        }
+
+        $user = Auth::user();
+
+        // ユーザー以外がユーザーログインフォームから来た場合は拒否
+        if ($user->role !== 'user') {
+            Auth::logout();
+            return back()
+                ->withErrors(['email' => 'ログイン情報が登録されていません'])
+                ->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        return redirect()->route('attendance.show');
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+
+    public function adminLogout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin.login');
     }
 }

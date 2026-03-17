@@ -1,13 +1,42 @@
 .header{
     background-color: black;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    gap:50px;
+    padding-right: 20px;
 }
 .main{
     background-color: white;
 }
-.header__inner {
+.header__inner{
     margin:0px;
     padding: 0px 10px;
     height:80px;
     display:flex;
     align-items: center;
+}
+.nav{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.nav-link{
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+.logout__button--submit{
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+}
+@media (max-width: 850px){
+    .header{
+        padding:0 10px;
+        display:grid;
+        grid-template-columns: repeat(2);
+        gap:10px;
+    }
 }

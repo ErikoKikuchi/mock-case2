@@ -29,3 +29,8 @@
 .verification-form__resend{
     color: #0073CC;
 }
+@media (max-width: 850px) {
+    .container {
+        padding: 0 16px;
+    }
+}

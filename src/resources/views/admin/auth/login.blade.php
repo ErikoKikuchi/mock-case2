@@ -12,7 +12,7 @@
             <div class="login-form__title">
                 <h1 class="form__title">管理者ログイン</h1>
             </div>
-            <form class="login-form__inner" action="/login" method="post">@csrf
+            <form class="login-form__inner" action="/admin/login" method="post">@csrf
                 <div class="login-form__email">
                     <div class="login-form__label">
                         <label class="login-form__label-title" for="email">メールアドレス</label>
