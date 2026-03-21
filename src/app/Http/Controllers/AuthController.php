@@ -10,12 +10,13 @@ use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Gate;
 use Carbon\Carbon;
 
 
 class AuthController extends Controller
 {
-
+//登録関係
     public function register(RegisterRequest $request){
         $data=$request->validated();
         $data['password']=Hash::make($data['password']);
@@ -26,6 +27,70 @@ class AuthController extends Controller
         auth()->login($user);
         return redirect()->route('verification.notice');
     }
+//ログイン関係
+    public function login(LoginRequest $request)
+        {
+            $credentials = $request->only('email', 'password');
+
+            if (!Auth::attempt($credentials)) {
+                return back()
+                    ->withErrors(['email' => 'ログイン情報が登録されていません'])
+                    ->onlyInput('email');
+            }
+
+            // 認可チェック
+            if (Gate::denies('user-only')) {
+                Auth::logout();
+                return back()
+                    ->withErrors(['email' => 'ログイン情報が登録されていません'])
+                    ->onlyInput('email');
+            }
+
+            $request->session()->regenerate();
+            return redirect()->route('attendance.show');
+        }
+
+    public function adminLogin(LoginRequest $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (!Auth::attempt($credentials)) {
+            return back()
+                ->withErrors(['email' => 'ログイン情報が登録されていません'])
+                ->onlyInput('email');
+        }
+
+        // 認可チェック
+        if (Gate::denies('admin-only')) {
+            Auth::logout();
+            return back()
+                ->withErrors(['email' => 'ログイン情報が登録されていません'])
+                ->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        return redirect()->route('attendance.list');
+    }
+
+//ログアウト関係
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+
+    public function adminLogout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin.login');
+    }
+
+//ユーザー勤怠登録画面表示
     public function show (Request $request){
         $user=Auth::user();
 
@@ -49,65 +114,6 @@ class AuthController extends Controller
         $user=Auth::user();
         return view('admin.attendance.index', compact('user'));
     }
-    public function adminLogin(LoginRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
 
-        if (!Auth::attempt($credentials)) {
-            return back()
-                ->withErrors(['email' => 'ログイン情報が登録されていません'])
-                ->onlyInput('email');
-        }
 
-        $user = Auth::user();
-
-        // 管理者以外が管理者ログインフォームから来た場合は拒否
-        if ($user->role !== 'admin') {
-            Auth::logout();
-            return back()
-                ->withErrors(['email' => 'ログイン情報が登録されていません'])
-                ->onlyInput('email');
-        }
-
-        $request->session()->regenerate();
-        return redirect()->route('attendance.list');
-    }
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->only('email', 'password');
-
-        if (!Auth::attempt($credentials)) {
-            return back()
-                ->withErrors(['email' => 'ログイン情報が登録されていません'])
-                ->onlyInput('email');
-        }
-
-        $user = Auth::user();
-
-        // ユーザー以外がユーザーログインフォームから来た場合は拒否
-        if ($user->role !== 'user') {
-            Auth::logout();
-            return back()
-                ->withErrors(['email' => 'ログイン情報が登録されていません'])
-                ->onlyInput('email');
-        }
-
-        $request->session()->regenerate();
-        return redirect()->route('attendance.show');
-    }
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('login');
-    }
-
-    public function adminLogout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('admin.login');
-    }
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 
@@ -21,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::aliasMiddleware('role', RoleMiddleware::class);
+        Gate::define('admin-only', function ($user) {
+            return $user->role === 'admin';
+        });
+        Gate::define('user-only',function($user){
+            return $user->role ==='user';
+        });
     }
 }

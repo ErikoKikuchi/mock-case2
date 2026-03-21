@@ -105,7 +105,7 @@ class Attendance extends Model
         return Attribute::make(
             get: function(){
                 if (!$this->clock_in) return ['出勤'];
-                if ($this->clock_out) return [''];
+                if ($this->clock_out) return [];
 
                 $onBreak = $this->breakTimes
                     ->first(fn($break) => $break->break_start && !$break->break_end);

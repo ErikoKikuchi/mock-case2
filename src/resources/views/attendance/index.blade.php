@@ -18,13 +18,17 @@
         <div class="current-time">{{$date->format('H:i')}}</div>
     </div>
     <div class="attendance-button">
-        <form class="attendance-button" action="post">
+        @if(empty($attendanceButtons))
+            <p>お疲れ様でした</p>
+        @else
+        <form class="attendance-button" action="{{route('users.attendance.store')}}" method="post">@csrf
             @foreach($attendanceButtons as $attendanceButton)
-                <button class="attendance-button__submit" type="submit">
+                <button class="attendance-button__submit" value="{{$attendanceButton}}" type="submit" name="action">
                     {{$attendanceButton}}
                 </button>
             @endforeach
         </form>
+        @endif
     </div>
 </div>
 @endsection
