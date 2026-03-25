@@ -108,7 +108,7 @@ class AuthController extends Controller
         }
         $date=Carbon::now()->locale('ja');
 
-        return view('attendance.index', compact('user','attendance','status','date','attendanceButtons'));
+        return view('attendance.register', compact('user','attendance','status','date','attendanceButtons'));
     }
     public function index(Request $request){
         $user=Auth::user();

@@ -30,7 +30,7 @@ class AttendanceRequest extends Model
 
     public function requestItems()
     {
-        return $this->hasMany(RequestItem::class);
+        return $this->hasMany(RequestItem::class,'request_id');
     }
 
 //承認者

@@ -68,7 +68,7 @@ class Attendance extends Model
         get: function () {
             $minutes = $this->total_work_minutes;
             if ($minutes === null) return '--:--';
-            return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
+            return sprintf('%d:%02d', intdiv($minutes, 60), $minutes % 60);
         }
     );
     }
@@ -79,7 +79,7 @@ class Attendance extends Model
         get: function () {
             $minutes = $this->total_break_minutes;
             if ($minutes === 0) return '--:--';
-            return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
+            return sprintf('%d:%02d', intdiv($minutes, 60), $minutes % 60);
         }
     );
     }
