@@ -39,6 +39,11 @@ class Attendance extends Model
         return $this->hasMany(RequestItem::class);
     }
 
+    public function attendanceRequests()
+    {
+        return $this->hasMany(AttendanceRequest::class);
+    }
+
     //休憩時間の合計（休憩開始・終了両方とも打刻してあるものを抽出して計算）
     protected function totalBreakMinutes(): Attribute
     {
@@ -109,7 +114,18 @@ class Attendance extends Model
 
                 $onBreak = $this->breakTimes
                     ->first(fn($break) => $break->break_start && !$break->break_end);
-                return $onBreak ?['休憩戻']:['退勤','休憩入'];
+                return $onBreak ?[]:['退勤'];
+            }
+        );
+    }
+    protected function breakTimeButton():Attribute
+    {
+        return Attribute::make(
+            get: function(){
+                if ($this->clock_out) return [];
+                $onBreak = $this->breakTimes
+                    ->first(fn($break) => $break->break_start && !$break->break_end);
+                return $onBreak ?['休憩戻']:['休憩入'];
             }
         );
     }

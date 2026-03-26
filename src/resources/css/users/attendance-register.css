@@ -1,0 +1,66 @@
+.attendance-form{
+    background-color: rgb(240,239,242);
+    padding:50px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.attendance-status{
+    margin: 100px auto 20px;
+    padding: 16px 8px;
+}
+.status-information{
+    background-color: #C8C8C8;
+    color: #696969;
+    border-radius: 50px;
+    width:100px;
+    height:40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.attendance-date{
+    margin-bottom: 50px;
+}
+.todays-date{
+    font-size: 32px;
+}
+.attendance-time{
+    margin-bottom: 50px;
+}
+.current-time{
+    font-size: 64px;
+    font-weight: bold;
+}
+.attendance-button{
+    margin-bottom: 200px;
+    display: flex;
+    gap:100px;
+}
+.attendance-message{
+    font-size: 18px;
+    font-weight: bold;
+}
+.attendance-button__submit{
+    background-color: black;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    height:80px;
+    width:200px;
+    border-radius: 50px;
+}
+.breakTime-button__submit{
+    background-color: white;
+    font-size: 32px;
+    font-weight: bold;
+    height:80px;
+    width:200px;
+    border:none;
+    border-radius: 50px;
+}
+@media (max-width: 850px) {
+    .attendance-form {
+        max-width: 100%;
+    }
+}

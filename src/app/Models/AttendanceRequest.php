@@ -14,6 +14,7 @@ class AttendanceRequest extends Model
 
     protected $fillable = [
         'user_id',
+        'attendance_id',
         'reason',
         'status',
         'approved_by',
@@ -31,6 +32,11 @@ class AttendanceRequest extends Model
     public function requestItems()
     {
         return $this->hasMany(RequestItem::class,'request_id');
+    }
+
+    public function attendance()
+    {
+        return $this->belongsTo(Attendance::class);
     }
 
 //承認者

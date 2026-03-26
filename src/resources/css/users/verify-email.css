@@ -28,6 +28,8 @@
 }
 .verification-form__resend{
     color: #0073CC;
+    border:none;
+    background-color: white;
 }
 @media (max-width: 850px) {
     .container {

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
+            $table->foreignId('attendance_id')->constrained()->restrictOnDelete();
             $table->string('reason');
             $table->enum('status',['pending','approved'])->default('pending');
             $table->foreignId('approved_by')->nullable()->references('id')->on('users')->restrictOnDelete();

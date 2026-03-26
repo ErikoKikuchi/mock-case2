@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\AttendanceRequest;
 use App\Models\User;
+use App\Models\Attendance;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Request>
@@ -21,6 +22,7 @@ class AttendanceRequestFactory extends Factory
     {
         return [
             'user_id'     => User::factory(),
+            'attendance_id'=>Attendance::factory(),
             'reason'      => $this->faker->sentence(),
             'status'      => 'pending',
             'approved_by' => null,

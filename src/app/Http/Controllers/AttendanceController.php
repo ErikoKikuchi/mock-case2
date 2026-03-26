@@ -7,7 +7,6 @@ use App\Http\Requests\AttendanceRequest  as RequestModel;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\AttendanceRequest;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -15,9 +14,6 @@ class AttendanceController extends Controller
 {
 //勤怠登録
     public function store(RequestModel $request){
-        if (Gate::denies('user-only')) {
-            abort(403);
-        }
 
         $user=Auth::user();
         $work_date=Carbon::now();
@@ -54,9 +50,6 @@ class AttendanceController extends Controller
 
 //勤怠一覧表示
     public function index(Request $request){
-        if (Gate::denies('user-only')) {
-            abort(403);
-        }
         $user=Auth::user();
 
         $month=$request->query('month');
@@ -76,9 +69,6 @@ class AttendanceController extends Controller
     }
 //勤怠詳細表示
     public function show(Request $request, $id){
-        if (Gate::denies('user-only')) {
-            abort(403);
-        }
         $user=Auth::user();
         $attendance=Attendance::find($id);
         $breakTime=BreakTime::where('attendance_id',$attendance->id)->get();

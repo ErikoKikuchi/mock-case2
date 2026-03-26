@@ -17,7 +17,8 @@
             </tr>
             <tr class="attendance-detail__row">
                 <th class="attendance-detail__header">日付</th>
-                <td class="attendance-detail__description">{{$attendance->work_date->format('Y年m月d日')}}</td>
+                <td class="attendance-detail__description">{{$attendance->work_date->format('Y年')}}</td>
+                <td class="attendance-detail__description">{{$attendance->work_date->format('n月j日')}}</td>
             </tr>
             <tr class="attendance-detail__row">
                 <th class="attendance-detail__header">出勤・退勤</th>
@@ -38,7 +39,8 @@
             <p class="alert-message">*承認待ちのため修正はできません</p>
         </div>
     @else
-        <form action="" method="post">
+        <form class="attendance-request" action="{{route('users.attendance.request')}}" method="POST">@csrf
+            <input type="hidden" name="attendance_id" value="{{$attendance->id}}">
             <table class="attendance-detail__table">
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">名前</th>
@@ -53,35 +55,82 @@
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">出勤・退勤</th>
                     <td class="attendance-detail__description">
-                        <input class="attendance-time__form" type="time" name="clock_in" value="{{$attendance->clock_in?->format('H:i')}}">
+                        <div class="description__input">
+                            <input class="attendance-time__form" type="time" name="clock_in" value="{{old('clock_in',$attendance->clock_in?->format('H:i'))}}" >
+                            <div class="error">
+                                @error('clock_in')
+                                    <span class="error-message">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="attendance-time__form">~</div>
-                        <input class="attendance-time__form" type="time" name="clock_out" value="{{$attendance->clock_out?->format('H:i')}}">
+                        <div class="description__input">
+                            <input class="attendance-time__form" type="time" name="clock_out" value="{{old('clock_out',$attendance->clock_out?->format('H:i'))}}" >
+                            <div class="error">
+                                @error('clock_out')
+                                    <span class="error-message">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">休憩</th>
                     <td class="attendance-detail__description">
-                        <input class="break-time__form" type="time" name="break_start" value="{{$breakTime->get(0)?->break_start?->format('H:i')}}">
+                        <div class="description__input">
+                            <input class="break-time__form" type="time" name="break_start[]" value="{{old('break_start.0',$breakTime->get(0)?->break_start?->format('H:i'))}}" >
+                            <div class="error">
+                                @error('break_start.0')
+                                    <span class="error-message">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="attendance-time__form">~</div>
-                        <input class="break-time__form" type="time" name="break_end" value="{{$breakTime->get(0)?->break_end?->format('H:i')}}">
+                        <div class="description__input">
+                            <input class="break-time__form" type="time" name="break_end[]" value="{{old('break_end.0',$breakTime->get(0)?->break_end?->format('H:i'))}}" >
+                            <div class="error">
+                                @error('break_end.0')
+                                    <span class="error-message">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">休憩2</th>
                     <td class="attendance-detail__description">
-                        <input class="break-time__form" type="time" name="break_start" value="{{$breakTime->get(1)?->break_start?->format('H:i')}}">
+                        <div class="description__input">
+                            <input class="break-time__form" type="time" name="break_start[]" value="{{old('break_start.1',$breakTime->get(1)?->break_start?->format('H:i'))}}" >
+                            <div class="error">
+                                @error('break_start.1')
+                                    <span class="error-message">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="attendance-time__form">~</div>
-                        <input class="break-time__form" type="time" name="break_end" value="{{$breakTime->get(1)?->break_end?->format('H:i')}}">
+                        <div class="description__input">
+                            <input class="break-time__form" type="time" name="break_end[]" value="{{old('break_end.1',$breakTime->get(1)?->break_end?->format('H:i'))}}" >
+                            <div class="error">
+                                @error('break_end.1')
+                                    <span class="error-message">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">備考</th>
                     <td class="attendance-detail__description">
                         <textarea class="textarea__form" name="reason">{{$attendanceRequest?->reason}}</textarea>
+                        <div class="error">
+                            @error('reason')
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </td>
                 </tr>
             </table>
-            <button type="submit">修正</button>
+            <button class="request-button" type="submit">修正</button>
         </form>
     @endif
 </div>

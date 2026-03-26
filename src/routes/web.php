@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified','role:user'])->group(function () {
     Route::get('/attendance/detail/{id}',[AttendanceController::class,'show'])->name('users.attendance.detail');
     Route::get('/stamp_correction_request/list',[AttendanceRequestController::class,'index'])->name('users.request.list');
     Route::post('/attendance/store',[AttendanceController::class,'store'])->name('users.attendance.store');
+    Route::post('/attendance/request/send',[AttendanceRequestController::class,'create'])->name('users.attendance.request');
 });
 
 Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {

@@ -102,13 +102,15 @@ class AuthController extends Controller
         if(!$attendance){
             $status='勤務外';
             $attendanceButtons=['出勤'];
+            $breakTimeButtons=[];
         }else{
             $status=$attendance->status;
             $attendanceButtons=$attendance->attendanceButton;
+            $breakTimeButtons=$attendance->breakTimeButton;
         }
         $date=Carbon::now()->locale('ja');
 
-        return view('attendance.register', compact('user','attendance','status','date','attendanceButtons'));
+        return view('attendance.register', compact('user','attendance','status','date','attendanceButtons','breakTimeButtons'));
     }
     public function index(Request $request){
         $user=Auth::user();
