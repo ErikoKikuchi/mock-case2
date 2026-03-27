@@ -9,6 +9,7 @@ use App\Models\BreakTime;
 use App\Models\AttendanceRequest;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class AttendanceController extends Controller
 {
@@ -60,17 +61,34 @@ class AttendanceController extends Controller
 
         $start=$date->copy()->startOfMonth();
         $end=$date->copy()->endOfMonth();
+        $period = CarbonPeriod::create($start, $end);
 
         $monthlyAttendances=Attendance::where('user_id',$user->id)
         ->WhereBetween('work_date',[$start,$end])
         ->get();
 
-        return view('attendance.index',compact('user','date','monthlyAttendances','previous','next'));
+        $calendar = collect();
+        foreach($period as $date){
+            $calendar->push([
+                'date' => $date,
+                'attendance' => $monthlyAttendances->first(fn($a) => $a->work_date->toDateString() === $date->toDateString())
+            ]);
+        }
+
+
+        return view('attendance.index',compact('user','date','monthlyAttendances','previous','next','calendar'));
     }
 //勤怠詳細表示
-    public function show(Request $request, $id){
+    public function show(Request $request, $id=null){
         $user=Auth::user();
-        $attendance=Attendance::find($id);
+        if($id){
+            $attendance=Attendance::find($id);
+        }else{
+            $date = $request->query('date');
+            $attendance = Attendance::firstOrCreate(
+                ['user_id' => $user->id, 'work_date' => $date]
+            );
+        }
         $breakTime=BreakTime::where('attendance_id',$attendance->id)->get();
 
         $attendanceRequest = AttendanceRequest::whereHas('requestItems', function($query) use ($attendance) {

@@ -8,7 +8,6 @@ use App\Http\Requests\AttendanceChangeRequest;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\AttendanceRequest;
-use Carbon\Carbon;
 
 class AttendanceRequestController extends Controller
 {
@@ -32,7 +31,8 @@ class AttendanceRequestController extends Controller
         $attendanceRequest = AttendanceRequest::create([
             'user_id' => $user->id,
             'reason' => $request->reason,
-            'status' => 'pending', 
+            'status' => 'pending',
+            'attendance_id' => $attendance->id, 
         ]);
     //clock_inの申請
         $attendanceRequest->requestItems()->create([
