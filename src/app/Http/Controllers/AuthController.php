@@ -112,10 +112,26 @@ class AuthController extends Controller
 
         return view('attendance.register', compact('user','attendance','status','date','attendanceButtons','breakTimeButtons'));
     }
+//管理者勤怠一覧画面表示
     public function index(Request $request){
         $user=Auth::user();
-        return view('admin.attendance.index', compact('user'));
+        $allStaffs= User::where('role', 'user')->get();
+
+        $day=$request->query('day');
+        $date=$day ?Carbon::parse($day)->locale('ja'):Carbon::now()->locale('ja');
+
+        $previous=$date->copy()->subDay();
+        $next=$date->copy()->addDay();
+
+        $dailyAttendances=Attendance::where('work_date',$date->toDateString())
+        ->get();
+
+        $calendar = $allStaffs->map(function($staff) use ($dailyAttendances) {
+            return [
+                'staff' => $staff,
+                'attendance' => $dailyAttendances->firstWhere('user_id', $staff->id)
+            ];
+        });
+            return view('admin.attendance.index', compact('user','date','dailyAttendances','previous','next','calendar'));
     }
-
-
 }

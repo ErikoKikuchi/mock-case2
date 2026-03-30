@@ -8,6 +8,6 @@
 
 @section('content')
 <p>
-    
+    ここは修正申請承認画面です
 </p>
 @endsection

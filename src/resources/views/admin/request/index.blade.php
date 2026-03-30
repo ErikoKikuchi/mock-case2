@@ -8,6 +8,6 @@
 
 @section('content')
 <p>
-    
+    ここは管理者申請一覧画面です
 </p>
 @endsection

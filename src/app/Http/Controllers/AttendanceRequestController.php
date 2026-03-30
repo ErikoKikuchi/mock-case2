@@ -29,9 +29,10 @@ class AttendanceRequestController extends Controller
         $attendance = Attendance::findOrFail($request->attendance_id);
 
         $attendanceRequest = AttendanceRequest::create([
-            'user_id' => $user->id,
+            'user_id' => $attendance->user_id,
             'reason' => $request->reason,
-            'status' => 'pending',
+            'status' => $user->role === 'admin' ? 'approved' : 'pending',
+            'corrected_by' => $user->role === 'admin' ? $user->id : null,
             'attendance_id' => $attendance->id, 
         ]);
     //clock_inの申請
@@ -71,8 +72,23 @@ class AttendanceRequestController extends Controller
                 ]);
             }
             }
-        return redirect()
-            ->route('users.request.list')
-            ->with('message','変更申請が完了しました');
+        return $user->role === 'admin'
+            ? redirect()->route('attendance.list', $attendance->user_id)
+            ->with('message', '修正が完了しました')
+            : redirect()
+                    ->route('users.request.list')
+                    ->with('message','変更申請が完了しました');
+    }
+//管理者用申請一覧
+    public function adminIndex(Request $request)
+    {
+        $user = Auth::user();
+        return view ('admin.request.index',compact('user'));
+    }
+//管理者用承認画面
+    public function adminShow(Request $request)
+    {
+        $user = Auth::user();
+        return view ('admin.request.approve',compact('user'));
     }
 }

@@ -31,15 +31,15 @@ Route::middleware('auth')->group(function () {
         $request->fulfill();
         return redirect()->route('attendance.show');
     })->middleware(['auth'])->name('verification.verify');
-});
+    Route::get('/attendance/detail/{id?}',[AttendanceController::class,'show'])->name('users.attendance.detail');
+    Route::post('/attendance/request/send',[AttendanceRequestController::class,'create'])->name('users.attendance.request');
 
 Route::middleware(['auth', 'verified','role:user'])->group(function () {
     Route::get('/attendance',[AuthController::class,'show'])->name('attendance.show');
-    Route::get('/attendance/list',[AttendanceController::class,'index'])->name('users.attendance.list');
-    Route::get('/attendance/detail/{id?}',[AttendanceController::class,'show'])->name('users.attendance.detail');
     Route::get('/stamp_correction_request/list',[AttendanceRequestController::class,'index'])->name('users.request.list');
     Route::post('/attendance/store',[AttendanceController::class,'store'])->name('users.attendance.store');
-    Route::post('/attendance/request/send',[AttendanceRequestController::class,'create'])->name('users.attendance.request');
+    Route::get('/attendance/list',[AttendanceController::class,'index'])->name('users.attendance.list');
+});
 });
 
 Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
@@ -49,5 +49,4 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
     Route::get('/attendance/staff/{id}',[UserController::class,'show'])->name('each.staff.attendance');
     Route::get('/stamp_correction_request/list',[AttendanceRequestController::class,'adminIndex'])->name('request.list');
     Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}',[AttendanceRequestController::class,'adminShow'])->name('request.approve.detail');
-    
 });

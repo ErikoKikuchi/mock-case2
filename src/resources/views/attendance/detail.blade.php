@@ -136,7 +136,7 @@
                     <tr class="attendance-detail__row">
                         <th class="attendance-detail__header">備考</th>
                         <td class="attendance-detail__description" colspan="3">
-                            <textarea class="textarea__form" name="reason">{{$attendanceRequest?->reason}}</textarea>
+                            <textarea class="textarea__form" name="reason">{{old('reason',$attendanceRequest?->reason)}}</textarea>
                             <div class="error">
                                 @error('reason')
                                     <span class="error-message">{{ $message }}</span>

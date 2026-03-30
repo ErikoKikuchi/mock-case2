@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->foreignId('attendance_id')->constrained()->restrictOnDelete();
+            $table->foreignId('corrected_by')->nullable()->references('id')->on('users')->restrictOnDelete();
             $table->string('reason');
             $table->enum('status',['pending','approved'])->default('pending');
             $table->foreignId('approved_by')->nullable()->references('id')->on('users')->restrictOnDelete();

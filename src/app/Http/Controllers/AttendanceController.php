@@ -82,9 +82,10 @@ class AttendanceController extends Controller
     public function show(Request $request, $id=null){
         $user=Auth::user();
         if($id){
-            $attendance=Attendance::find($id);
+            $attendance=Attendance::findOrFail($id);
         }else{
             $date = $request->query('date');
+            $userId = $request->query('user_id') ?? $user->id;
             $attendance = Attendance::firstOrCreate(
                 ['user_id' => $user->id, 'work_date' => $date]
             );
