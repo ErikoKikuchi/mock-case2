@@ -56,7 +56,7 @@
 　　（画面フロー：ログイン→勤怠登録画面）  
 - 一般ユーザーナビ（勤怠・勤怠一覧・申請・ログアウト）  
 - 一般ユーザー申請フロー：  
-　　①勤怠一覧→詳細ボタン押下→申請画面（承認待ち中は申請不可）  
+　　①勤怠一覧→詳細ボタン押下→申請画面（承認待ち中は申請不可）→申請後は  
 　　②申請一覧（承認待ち・承認済）→詳細ボタン押下→申請画面（承認待ち中は申請不可）  
 - 管理者ログイン画面（http://localhost/admin/login）  
 　　（画面フロー：ログイン→その日の勤怠情報一覧）  
@@ -69,6 +69,16 @@
 　　①管理者　name:admin user ,email:admin@example.com ,password:adminpass  
 　　②一般ユーザー　name:test user ,email:user@example.com, password:password  
   
+## 開発時の注意事項
+  
+### 複数ロールの同時ログインについて
+ユーザーと管理者を同一ブラウザで同時にログインすると419エラーが発生します。
+Laravelのセッション構造上、同一ブラウザでは1セッションのみ有効です。
+
+**動作確認時の手順**  
+- ユーザー：通常ブラウザ  
+- 管理者：シークレットモード（または別ブラウザ）  
+  
 ## テスト用には下記の通り環境構築  
 - mysqlコンテナにrootユーザーでログインし'demo_test'データベースを作成  
 - config/database.phpの修正（'database' => 'demo_test','username' => 'root','password' => 'root'）  
@@ -79,8 +89,6 @@
 - php artisan storage:link  
 - php artisan test  
 - このプロジェクトではviteを使用しています。テスト実行時に `public/build/manifest.json` が必要ですが、本プロジェクトでは testing 環境では Vite を読み込まない構成にしているため、テスト実行のために npm build を行う必要はありません。  
-
-
 
 ## 使用技術(実行環境)  
 - php:8.4.18-fpm  

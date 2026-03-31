@@ -85,7 +85,6 @@ class AttendanceController extends Controller
             $attendance=Attendance::findOrFail($id);
         }else{
             $date = $request->query('date');
-            $userId = $request->query('user_id') ?? $user->id;
             $attendance = Attendance::firstOrCreate(
                 ['user_id' => $user->id, 'work_date' => $date]
             );
@@ -97,4 +96,25 @@ class AttendanceController extends Controller
         })->latest()->first();
         return view ('attendance.detail',compact('user','attendance','attendanceRequest','breakTime'));
     }
+//管理者用勤怠詳細表示
+public function adminShow(Request $request, $id=null){
+        $user=Auth::user();
+        $userId = $request->query('user_id');
+        if($id){
+            $attendance=Attendance::findOrFail($id);
+        }else{
+            $date = $request->query('date');
+            $userId = $request->query('user_id') ?? $user->id;
+            $attendance = Attendance::firstOrCreate(
+                ['user_id' => $userId, 'work_date' => $date]
+            );
+        }
+        $breakTime=BreakTime::where('attendance_id',$attendance->id)->get();
+
+        $attendanceRequest = AttendanceRequest::whereHas('requestItems', function($query) use ($attendance) {
+            $query->where('attendance_id', $attendance->id);
+        })->latest()->first();
+        return view ('admin.attendance.detail',compact('user','attendance','attendanceRequest','breakTime'));
+    }
+
 }

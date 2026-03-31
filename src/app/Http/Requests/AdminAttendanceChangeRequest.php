@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AttendanceChangeRequest extends FormRequest
+class AdminAttendanceChangeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,7 +33,7 @@ class AttendanceChangeRequest extends FormRequest
         return [
             'clock_in.required'=>'出勤時間を入力してください',
             'clock_out.required'=>'退勤時間を入力してください',
-            'clock_out.after'=>'出勤時間が不適切な値です',
+            'clock_out.after'=>'出勤時間もしくは退勤時間が不適切な値です',
             'break_start.*.after'=>'休憩時間が不適切な値です',
             'break_start.*.before'=>'休憩時間が不適切な値です',
             'break_end.*.before'=>'休憩時間もしくは退勤時間が不適切な値です',

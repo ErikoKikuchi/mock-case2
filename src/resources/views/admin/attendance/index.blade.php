@@ -8,11 +8,6 @@
 
 @section('content')
 <div class="content">
-    @if(session('message'))
-        <div class="message-box">
-            <p class="message">{{session('message')}}</p>
-        </div>
-    @endif
     <div class ="attendance-list">
         <div class="admin-attendance-list__title">| {{$date->format('Y年m月d日')}}の勤怠 </div>
         <div class="attendance-list__day">
@@ -45,9 +40,9 @@
                     <td class="attendance-list__description">{{$item['attendance']?->workTimeDisplay}}</td>
                     <td class="attendance-list__description">
                         @if($item['attendance'])
-                            <a class="attendance-detail__link" href="{{route('users.attendance.detail',['id'=>$item['attendance']->id])}}">詳細</a>
+                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['id'=>$item['attendance']->id])}}">詳細</a>
                         @else
-                            <a class="attendance-detail__link" href="{{route('users.attendance.detail',['date'=>$date->toDateString(), 'user_id'=>$item['staff']->id])}}">詳細</a>
+                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['date'=>$date->toDateString(), 'user_id'=>$item['staff']->id])}}">詳細</a>
                         @endif
                     </td>
                 </tr>

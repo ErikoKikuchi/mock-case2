@@ -31,22 +31,24 @@ Route::middleware('auth')->group(function () {
         $request->fulfill();
         return redirect()->route('attendance.show');
     })->middleware(['auth'])->name('verification.verify');
-    Route::get('/attendance/detail/{id?}',[AttendanceController::class,'show'])->name('users.attendance.detail');
-    Route::post('/attendance/request/send',[AttendanceRequestController::class,'create'])->name('users.attendance.request');
+});
 
 Route::middleware(['auth', 'verified','role:user'])->group(function () {
     Route::get('/attendance',[AuthController::class,'show'])->name('attendance.show');
     Route::get('/stamp_correction_request/list',[AttendanceRequestController::class,'index'])->name('users.request.list');
     Route::post('/attendance/store',[AttendanceController::class,'store'])->name('users.attendance.store');
     Route::get('/attendance/list',[AttendanceController::class,'index'])->name('users.attendance.list');
-});
+    Route::get('/attendance/detail/{id?}',[AttendanceController::class,'show'])->name('users.attendance.detail');
+    Route::post('/attendance/request/send',[AttendanceRequestController::class,'create'])->name('users.attendance.request');
 });
 
 Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
     Route::get('/attendance/list', [AuthController::class, 'index'])->name('attendance.list');
-    Route::get('/attendance/{id}',[AttendanceController::class,'adminShow'])->name('admin.attendance.detail');
+    Route::get('/attendance/{id?}',[AttendanceController::class,'adminShow'])->name('admin.attendance.detail');
     Route::get('/staff/list',[UserController::class,'index'])->name('staff.list');
     Route::get('/attendance/staff/{id}',[UserController::class,'show'])->name('each.staff.attendance');
     Route::get('/stamp_correction_request/list',[AttendanceRequestController::class,'adminIndex'])->name('request.list');
     Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}',[AttendanceRequestController::class,'adminShow'])->name('request.approve.detail');
+    Route::post('/attendance/request/send',[AttendanceRequestController::class,'adminCreate'])->name('admin.attendance.request');
+    Route::get('/csv/{id}', [UserController::class, 'exportCsv'])->name('admin.csv');
 });

@@ -8,6 +8,11 @@
 
 @section('content')
 <div class="content">
+    @if(session('message'))
+        <div class="message-box">
+            <p class="message">{{session('message')}}</p>
+        </div>
+    @endif
     <div class ="attendance-list">
         <div class="staff-attendance__title">| {{$name->name}}さんの勤怠 </div>
         <div class="attendance-list__month">
@@ -40,14 +45,17 @@
                     <td class="attendance-list__description">{{$item['attendance']?->workTimeDisplay}}</td>
                     <td class="attendance-list__description">
                         @if($item['attendance'])
-                            <a class="attendance-detail__link" href="{{route('users.attendance.detail',['id'=>$item['attendance']->id])}}">詳細</a>
+                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['id'=>$item['attendance']->id])}}">詳細</a>
                         @else
-                            <a class="attendance-detail__link" href="{{route('users.attendance.detail',['date'=>$item['date']->toDateString()])}}">詳細</a>
+                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['date'=>$item['date']->toDateString()])}}">詳細</a>
                         @endif
                     </td>
                 </tr>
             @endforeach
         </table>
+        <div class="csv-button">
+            <a class="csv-button__link" href="{{route('admin.csv' , ['id' => $name->id, 'month' => $date->format('Y-m')]) }}">CSV出力</a>
+        </div>
     </div>
 </div>
 @endsection

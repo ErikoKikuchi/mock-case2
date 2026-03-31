@@ -1,6 +1,13 @@
 .content{
     background-color: rgb(240,239,242);
 }
+.message-box{
+    background-color: rgb(163, 255, 175);
+}
+.message{
+    color:green;
+    padding-left: 20px;
+}
 .attendance-list{
     display:flex;
     flex-direction:column;
