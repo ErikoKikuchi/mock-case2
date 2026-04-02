@@ -44,6 +44,16 @@ class Attendance extends Model
         return $this->hasMany(AttendanceRequest::class);
     }
 
+    //スコープ
+    public function scopeForUser($query, $userId)
+    {
+        return $query->where('user_id', $userId);
+    }
+    public function scopeInMonth($query, $start, $end)
+    {
+        return $query->whereBetween('work_date', [$start, $end]);
+    }
+
     //休憩時間の合計（休憩開始・終了両方とも打刻してあるものを抽出して計算）
     protected function totalBreakMinutes(): Attribute
     {

@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Attendance;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
+use App\Services\AttendanceService;
 
 class UserController extends Controller
 {
+//カレンダーサービスクラス
+    public function __construct(private AttendanceService $attendanceService) {}
 //管理者用スタッフ一覧
     public function index(Request $request)
     {
@@ -23,54 +25,28 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $name=User::find($id);
-
         $month=$request->query('month');
-        $date=$month ?Carbon::parse($month)->locale('ja'):Carbon::now()->locale('ja');
 
-        $previous=$date->copy()->subMonth();
-        $next=$date->copy()->addMonth();
+        $calendarData=$this->attendanceService->getCalendarData($month);
 
-        $start=$date->copy()->startOfMonth();
-        $end=$date->copy()->endOfMonth();
-        $period = CarbonPeriod::create($start, $end);
+        $monthlyAttendances=Attendance::forUser($name->id)->inMonth($calendarData['start'],$calendarData['end'])->get();
 
-        $monthlyAttendances=Attendance::where('user_id',$name->id)
-        ->WhereBetween('work_date',[$start,$end])
-        ->get();
+        $calendar = $this->attendanceService->buildCalendar($calendarData['period'], $monthlyAttendances);
 
-        $calendar = collect();
-        foreach($period as $date){
-            $calendar->push([
-                'date' => $date,
-                'attendance' => $monthlyAttendances->first(fn($a) => $a->work_date->toDateString() === $date->toDateString())
-            ]);
-        }
-
-
-        return view('admin.users.attendance',compact('date','monthlyAttendances','previous','next','calendar','name'));
+        return view('admin.users.attendance',compact('calendarData','calendar','name'));
     }
 //CSV
     public function exportCsv(Request $request ,$id){
     //ユーザーを指定してデータの取得
         $query=User::findOrFail($id);
         $month=$request->query('month');
-        $date=$month ?Carbon::parse($month)->locale('ja'):Carbon::now()->locale('ja');
 
-        $start=$date->copy()->startOfMonth();
-        $end=$date->copy()->endOfMonth();
-        $period = CarbonPeriod::create($start, $end);
+        $calendarData=$this->attendanceService->getCalendarData($month);
 
-        $monthlyAttendances=Attendance::where('user_id',$query->id)
-        ->WhereBetween('work_date',[$start,$end])
-        ->get();
+        $monthlyAttendances=Attendance::forUser($query->id)->inMonth($calendarData['start'],$calendarData['end'])->get();
 
-        $calendar = collect();
-        foreach($period as $date){
-            $calendar->push([
-                'date' => $date,
-                'attendance' => $monthlyAttendances->first(fn($a) => $a->work_date->toDateString() === $date->toDateString())
-            ]);
-        }
+        $calendar = $this->attendanceService->buildCalendar($calendarData['period'], $monthlyAttendances);
+
     //CSV設定
         $filename ="月次勤怠(" .$month ." 月分 ".$query->name .").csv";
         return response()->streamDownload(function () use ($calendar) {

@@ -17,14 +17,14 @@
         <div class="staff-attendance__title">| {{$name->name}}さんの勤怠 </div>
         <div class="attendance-list__month">
             <div class="attendance-list__previous">
-                <a class="previous__month" href="{{route('each.staff.attendance',['id' => $name->id, 'month'=>$previous->format('Y-m')])}}">←前月</a>
+                <a class="previous__month" href="{{route('each.staff.attendance',['id' => $name->id, 'month'=>$calendarData['previous']->format('Y-m')])}}">←前月</a>
             </div>
             <div class="attendance-list__current">
                 <img class="calender__logo" src="{{asset('/images/カレンダー.png')}}" type="image" name="logo">
-                <div class="current__month">{{$date->format('Y/m')}}</div>
+                <div class="current__month">{{$calendarData['date']->format('Y/m')}}</div>
             </div>
             <div class="attendance-list__next">
-                <a class="next__month" href="{{route('each.staff.attendance',['id' => $name->id, 'month'=>$next->format('Y-m')])}}">翌月→</a>
+                <a class="next__month" href="{{route('each.staff.attendance',['id' => $name->id, 'month'=>$calendarData['next']->format('Y-m')])}}">翌月→</a>
             </div>
         </div>
         <table class="attendance-list__table">
@@ -47,14 +47,14 @@
                         @if($item['attendance'])
                             <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['id'=>$item['attendance']->id])}}">詳細</a>
                         @else
-                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['date'=>$item['date']->toDateString()])}}">詳細</a>
+                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['date'=>$item['date']->toDateString(),'user_id'=>$name->id])}}">詳細</a>
                         @endif
                     </td>
                 </tr>
             @endforeach
         </table>
         <div class="csv-button">
-            <a class="csv-button__link" href="{{route('admin.csv' , ['id' => $name->id, 'month' => $date->format('Y-m')]) }}">CSV出力</a>
+            <a class="csv-button__link" href="{{route('admin.csv' , ['id' => $name->id, 'month' => $calendarData['date']->format('Y-m')]) }}">CSV出力</a>
         </div>
     </div>
 </div>

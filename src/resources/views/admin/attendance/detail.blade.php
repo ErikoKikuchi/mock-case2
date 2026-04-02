@@ -14,7 +14,7 @@
             <table class="attendance-detail__table">
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">名前</th>
-                    <td class="attendance-detail__description">{{$user->name}}</td>
+                    <td class="attendance-detail__description">{{$attendance->user->name}}</td>
                 </tr>
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">日付</th>
@@ -51,7 +51,7 @@
                 <table class="attendance-detail__table">
                     <tr class="attendance-detail__row">
                         <th class="attendance-detail__header">名前</th>
-                        <td class="attendance-detail__description">{{$user->name}}
+                        <td class="attendance-detail__description">{{$attendance->user->name}}
                         </td>
                     </tr>
                     <tr class="attendance-detail__row">
