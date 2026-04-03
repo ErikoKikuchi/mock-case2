@@ -53,6 +53,16 @@ class Attendance extends Model
     {
         return $query->whereBetween('work_date', [$start, $end]);
     }
+    //Attendance取得ロジック
+    public static function findOrResolveByDate($id, $userId,$date): Attendance
+    {
+        if ($id) {
+            return Attendance::findOrFail($id);
+        }
+        return Attendance::firstOrCreate(
+            ['user_id' => $userId, 'work_date' => $date]
+        );
+    }
 
     //休憩時間の合計（休憩開始・終了両方とも打刻してあるものを抽出して計算）
     protected function totalBreakMinutes(): Attribute

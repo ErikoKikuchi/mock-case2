@@ -9,6 +9,7 @@ use App\Http\Requests\AdminAttendanceChangeRequest;
 use App\Services\StoreAttendanceRequestService;
 use App\Services\ApproveAttendanceService;
 use App\Models\Attendance;
+use App\Models\User;
 use App\Models\AttendanceRequest;
 
 class AttendanceRequestController extends Controller
@@ -45,9 +46,35 @@ class AttendanceRequestController extends Controller
         return view ('admin.request.index',compact('user','tab','requestItems'));
     }
 //管理者用承認画面
-    public function show(Request $request)
+    public function show(Request $request, $attendance_correct_request_id=null)
     {
         $user = Auth::user();
-        return view ('admin.request.approve',compact('user'));
+
+        $attendance=Attendance::findOrFail($attendance_correct_request_id);
+        $user = User::findOrFail($attendance->user_id);
+
+        $attendanceRequest = AttendanceRequest::latestByAttendance($attendance);
+
+        $attendanceRequest?->load('requestItems');
+
+        return view ('admin.request.approve',compact('user','attendance','attendanceRequest'));
+    }
+//管理者用承認処理
+    public function update(Request $request)
+    {
+        $attendance = Attendance::findOrFail($request->attendance_id);
+        $attendanceRequest = AttendanceRequest::findOrFail($request->attendance_request_id);
+
+        if($attendanceRequest->status === 'approved'){
+            return redirect()->back()->with('message', 'すでに承認済みです');
+        }
+
+        $this->approveAttendanceService->approveAttendance(['attendanceRequest' => $attendanceRequest]);
+
+        $attendanceRequest->update(['status' => 'approved']);
+
+        return redirect()
+            ->route('request.list')
+            ->with('message', '承認が完了しました');
     }
 }

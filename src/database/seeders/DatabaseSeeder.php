@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
                         ->when(!$isPending, fn($f) => $f->approved($admin->id))
                         ->create([
                             'user_id' => $user->id,
+                            'attendance_id' => $attendance->id,
                             'reason'  => fake()->randomElement([
                                 '打刻忘れのため修正申請します',
                                 '誤った時間で打刻したため修正します',

@@ -54,6 +54,21 @@ class StoreAttendanceRequestService
                     'before_value' => $breakTime->break_end,
                     'after_value' => $breakEnd,
                 ]);
+            }else{
+                $attendanceRequest->requestItems()->create([
+                    'attendance_id' => $attendance->id,
+                    'break_id' => null,
+                    'column_name' => 'break_start',
+                    'before_value' => null,
+                    'after_value' => $breakStart,
+                ]);
+                $attendanceRequest->requestItems()->create([
+                    'attendance_id' => $attendance->id,
+                    'break_id' => null,
+                    'column_name' => 'break_end',
+                    'before_value' => null,
+                    'after_value' => $breakEnd,
+                ]);
             }
         }
         return [
