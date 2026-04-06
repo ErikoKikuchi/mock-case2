@@ -70,6 +70,18 @@
     font-weight: bold;
     text-decoration:none;
 }
+.csv-button{
+    display: flex;
+    align-self: flex-end;
+    margin-top: 20px;
+}
+.csv-button__link{
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding:10px 20px;
+    border-radius: 10px;
+}
 @media(max-width: 850px){
     .attendance-list{
         padding:10px;

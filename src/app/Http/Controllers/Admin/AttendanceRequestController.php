@@ -29,7 +29,10 @@ class AttendanceRequestController extends Controller
         $this->approveAttendanceService->approveAttendance($data);
 
         return redirect()
-            ->route('each.staff.attendance', $attendance->user_id)
+            ->route('each.staff.attendance',  [
+                'id' => $attendance->user_id,
+                'month' => $attendance->work_date->format('Y-m')
+                ])
             ->with('message', '修正が完了しました');
     }
 

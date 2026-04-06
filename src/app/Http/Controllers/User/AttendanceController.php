@@ -30,6 +30,9 @@ class AttendanceController extends Controller
 
 //勤怠一覧表示
     public function index(Request $request){
+        $request->validate([
+            'month' => ['nullable', 'date_format:Y-m'],
+        ]);
         $user=Auth::user();
         $month=$request->query('month');
 
@@ -43,6 +46,12 @@ class AttendanceController extends Controller
     }
 //勤怠詳細表示
     public function show(Request $request, $id=null){
+        $request->validate([
+            'date' => ['nullable', 'date_format:Y-m-d'],
+        ]);
+        if(!$id && !$request->query('date')){
+            abort(404);
+        }
         $user=Auth::user();
         $userId=$user->id;
         $date=$request->query('date');

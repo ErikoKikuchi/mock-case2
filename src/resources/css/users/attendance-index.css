@@ -4,7 +4,7 @@
 .attendance-list{
     display:flex;
     flex-direction:column;
-    padding: 50px;
+    padding: 50px 150px;
     justify-content:center;
     width:100%;
 }

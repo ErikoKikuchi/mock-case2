@@ -12,7 +12,7 @@ class AttendanceStoreService
     public function storeAttendance($action)
     {
         $user=Auth::user();
-        $work_date=Carbon::now();
+        $work_date=Carbon::today();
 
         if($action ==='出勤'){
             Attendance::firstOrCreate([

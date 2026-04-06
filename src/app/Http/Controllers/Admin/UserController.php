@@ -23,6 +23,9 @@ class UserController extends Controller
 //管理者用各スタッフの勤怠一覧
     public function show(Request $request,$id)
     {
+        $request->validate([
+            'month' => ['nullable', 'date_format:Y-m'],
+        ]);
         $user = Auth::user();
         $name=User::find($id);
         $month=$request->query('month');
@@ -38,6 +41,9 @@ class UserController extends Controller
 //CSV
     public function exportCsv(Request $request ,$id){
     //ユーザーを指定してデータの取得
+        $request->validate([
+            'month' => ['required', 'date_format:Y-m'],
+        ]);
         $query=User::findOrFail($id);
         $month=$request->query('month');
 

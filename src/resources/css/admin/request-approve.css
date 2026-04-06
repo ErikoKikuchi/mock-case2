@@ -1,0 +1,116 @@
+.content{
+    background-color: rgb(240,239,242);
+    padding:50px auto;
+}
+.attendance-detail{
+    display:flex;
+    flex-direction:column;
+    padding: 50px 150px;
+    justify-content:center;
+    width:100%;
+}
+.attendance-detail__inner{
+    display:flex;
+    flex-direction:column;
+}
+.attendance-detail__title{
+    font-size: 32px;
+    font-weight: bold;
+}
+.attendance-detail__table{
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 30px 0px;
+    width:100%;
+}
+.attendance-detail__row{
+    width:100%;
+    border: 1px solid #C8C8C8;
+    margin: 16px;
+    padding: 16px 8px;
+    height:80px
+}
+.attendance-detail__header{
+    text-align: left;
+    padding-left:100px;
+    color: #636363;
+    font-size: 18px;
+    width:30%;
+}
+.attendance-detail__description{
+    text-align: left;
+    padding-left:20px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    width:30%;
+    text-align: center;
+}
+.attendance-detail__form{
+    text-align: center;
+    font-size: 24px;
+}
+.attendance-time__form,
+.break-time__form{
+    text-align: center;
+    height:40px;
+    width:50%;
+}
+.attendance-detail__textarea{
+    text-align: left;
+    padding-left:20px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+.approve{
+    display: flex;
+    align-self: flex-end;
+}
+.approved{
+    display: flex;
+    align-self: flex-end;
+    border: 1px solid #C8C8C8;
+    padding:10px 20px;
+    background-color: #696969;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+}
+.approve-button{
+    width:100px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+}
+.error{
+    text-align: left;
+    width:80%;
+    align-items: center;
+    padding-left: 100px;
+}
+.error-message{
+    color:red;
+}
+@media(max-width: 850px){
+    .content{
+        max-width: 100%;
+    }
+    .error{
+        padding-left: 50px;
+    }
+    .attendance-detail{
+        padding:10px;
+    }
+}
+@media(min-width: 1200px){
+    .attendance-detail__inner{
+        max-width: 80%;
+    }
+}
+

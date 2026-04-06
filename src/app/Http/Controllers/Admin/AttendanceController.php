@@ -14,6 +14,7 @@ class AttendanceController extends Controller
 
 //管理者用勤怠詳細表示
     public function show(Request $request, $id=null){
+
         $user=Auth::user();
         $userId = $request->query('user_id');
         $date=$request->query('date');

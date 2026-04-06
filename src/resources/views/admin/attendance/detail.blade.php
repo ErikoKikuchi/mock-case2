@@ -85,52 +85,48 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="attendance-detail__row">
-                        <th class="attendance-detail__header">休憩</th>
-                        <td class="attendance-detail__description" >
-                            <div class="description__input">
-                                <input class="break-time__form" type="time" name="break_start[]" value="{{old('break_start.0',$breakTime->get(0)?->break_start?->format('H:i'))}}" >
-                                <div class="error">
-                                    @error('break_start.0')
-                                        <span class="error-message">{{ $message }}</span>
-                                    @enderror
+                    @foreach($breakTime as $index => $break)
+                        <tr class="attendance-detail__row">
+                            <th class="attendance-detail__header">休憩{{$index + 1}}</th>
+                            <td class="attendance-detail__description">
+                                <div class="description__input">
+                                    <input class="break-time__form" type="time" name="break_start[]" 
+                                        value="{{old('break_start.'.$index, $break->break_start?->format('H:i'))}}">
+                                    <div class="error">
+                                        @error('break_start.'.$index)
+                                            <span class="error-message">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
+                            </td>
+                            <td class="attendance-detail__form">~</td>
+                            <td class="attendance-detail__description">
+                                <div class="description__input">
+                                    <input class="break-time__form" type="time" name="break_end[]" 
+                                        value="{{old('break_end.'.$index, $break->break_end?->format('H:i'))}}">
+                                    <div class="error">
+                                        @error('break_end.'.$index)
+                                            <span class="error-message">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    <tr class="attendance-detail__row">
+                        <th class="attendance-detail__header">休憩{{$breakTime->count() + 1}}</th>
+                        <td class="attendance-detail__description">
+                            <input class="break-time__form" type="time" name="break_start[]" value="{{old('break_start.'.$breakTime->count())}}">
+                            @error('break_start.'.$breakTime->count())
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
                         </td>
                         <td class="attendance-detail__form">~</td>
-                        <td class="attendance-detail__description" >
-                            <div class="description__input">
-                                <input class="break-time__form" type="time" name="break_end[]" value="{{old('break_end.0',$breakTime->get(0)?->break_end?->format('H:i'))}}" >
-                                <div class="error">
-                                    @error('break_end.0')
-                                        <span class="error-message">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="attendance-detail__row">
-                        <th class="attendance-detail__header">休憩2</th>
-                        <td class="attendance-detail__description" >
-                            <div class="description__input">
-                                <input class="break-time__form" type="time" name="break_start[]" value="{{old('break_start.1',$breakTime->get(1)?->break_start?->format('H:i'))}}" >
-                                <div class="error">
-                                    @error('break_start.1')
-                                        <span class="error-message">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </td>
-                        <td class="attendance-detail__form">~</td>
-                        <td class="attendance-detail__description" >
-                            <div class="description__input">
-                                <input class="break-time__form" type="time" name="break_end[]" value="{{old('break_end.1',$breakTime->get(1)?->break_end?->format('H:i'))}}" >
-                                <div class="error">
-                                    @error('break_end.1')
-                                        <span class="error-message">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
+                        <td class="attendance-detail__description">
+                            <input class="break-time__form" type="time" name="break_end[]" value="{{old('break_end.'.$breakTime->count())}}">
+                            @error('break_end.'.$breakTime->count())
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
                         </td>
                     </tr>
                     <tr class="attendance-detail__row">

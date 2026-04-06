@@ -35,6 +35,9 @@ class StoreAttendanceRequestService
         ]);
     //breakTimeの申請
         foreach($request->break_start as $index => $breakStart){
+            if(empty($breakStart)){
+                continue;
+            }
             $breakEnd = $request->break_end[$index] ?? null;
             $breakTime = BreakTime::where('attendance_id', $attendance->id)
                 ->get()
