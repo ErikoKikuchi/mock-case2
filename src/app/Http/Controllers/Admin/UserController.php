@@ -20,7 +20,7 @@ class UserController extends Controller
         $staffs=User::where('role','user')->get();
         return view ('admin.users.index',compact('staffs'));
     }
-//管理者用各スタッフの勤怠一覧
+//管理者用各スタッフの勤怠一覧(月次勤怠)
     public function show(Request $request,$id)
     {
         $request->validate([

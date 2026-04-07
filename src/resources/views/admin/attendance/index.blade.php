@@ -9,17 +9,17 @@
 @section('content')
 <div class="content">
     <div class ="attendance-list">
-        <div class="admin-attendance-list__title">| {{$date->format('Y年m月d日')}}の勤怠 </div>
+        <div class="admin-attendance-list__title">| {{$dailyData['date']->format('Y年m月d日')}}の勤怠 </div>
         <div class="attendance-list__day">
             <div class="attendance-list__previous">
-                <a class="previous__day" href="{{route('attendance.list',['day'=>$previous->toDateString()])}}">←前日</a>
+                <a class="previous__day" href="{{route('attendance.list',['day'=>$dailyData['previous']->toDateString()])}}">←前日</a>
             </div>
             <div class="attendance-list__today">
                 <img class="calender__logo" src="{{asset('/images/カレンダー.png')}}" type="image" name="logo">
-                <div class="today">{{$date->format('Y/m/d')}}</div>
+                <div class="today">{{$dailyData['date']->format('Y/m/d')}}</div>
             </div>
             <div class="attendance-list__next">
-                <a class="next__day" href="{{route('attendance.list',['day'=>$next->toDateString()])}}">翌日→</a>
+                <a class="next__day" href="{{route('attendance.list',['day'=>$dailyData['next']->toDateString()])}}">翌日→</a>
             </div>
         </div>
         <table class="attendance-list__table">
@@ -42,7 +42,7 @@
                         @if($item['attendance'])
                             <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['id'=>$item['attendance']->id])}}">詳細</a>
                         @else
-                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['date'=>$date->toDateString(), 'user_id'=>$item['staff']->id])}}">詳細</a>
+                            <a class="attendance-detail__link" href="{{route('admin.attendance.detail',['date'=>$dailyData['date']->toDateString(), 'user_id'=>$item['staff']->id])}}">詳細</a>
                         @endif
                     </td>
                 </tr>

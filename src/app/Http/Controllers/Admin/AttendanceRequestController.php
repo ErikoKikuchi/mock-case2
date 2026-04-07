@@ -65,7 +65,7 @@ class AttendanceRequestController extends Controller
 //管理者用承認処理
     public function update(Request $request)
     {
-        $attendance = Attendance::findOrFail($request->attendance_id);
+        Attendance::findOrFail($request->attendance_id);
         $attendanceRequest = AttendanceRequest::findOrFail($request->attendance_request_id);
 
         if($attendanceRequest->status === 'approved'){

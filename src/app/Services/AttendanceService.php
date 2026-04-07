@@ -37,4 +37,21 @@ class AttendanceService
             ),
         ]);
     }
+    public function getDailyData(string|null $day): array
+    {
+        $date = $day ? Carbon::parse($day)->locale('ja') : Carbon::now()->locale('ja');
+
+        return [
+            'date'     => $date,
+            'previous' => $date->copy()->subDay(),
+            'next'     => $date->copy()->addDay(),
+        ];
+    }
+    public function makeDailyCalendar(Collection $staffs, Collection $attendances):Collection
+    {
+        return $staffs->map(fn($staff) => [
+            'staff'       => $staff,
+            'attendance' => $attendances->firstWhere('user_id', $staff->id)
+        ]);
+    }
 }

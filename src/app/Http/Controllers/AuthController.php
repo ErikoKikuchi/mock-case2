@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Gate;
 use Carbon\Carbon;
-
+use App\Services\AttendanceService;
 
 class AuthController extends Controller
 {
+//サービス
+    public function __construct(private AttendanceService $attendanceService) {}
 //登録関係
     public function register(RegisterRequest $request){
         $data=$request->validated();
@@ -114,24 +116,19 @@ class AuthController extends Controller
     }
 //管理者勤怠一覧画面表示
     public function index(Request $request){
+        $request->validate([
+            'day' => ['nullable', 'date_format:Y-m-d'],
+        ]);
         $user=Auth::user();
         $allStaffs= User::where('role', 'user')->get();
 
-        $day=$request->query('day');
-        $date=$day ?Carbon::parse($day)->locale('ja'):Carbon::now()->locale('ja');
+        $dailyData = $this->attendanceService->getDailyData($request->query('day'));
 
-        $previous=$date->copy()->subDay();
-        $next=$date->copy()->addDay();
-
-        $dailyAttendances=Attendance::where('work_date',$date->toDateString())
+        $dailyAttendances=Attendance::where('work_date',$dailyData['date']->toDateString())
         ->get();
 
-        $calendar = $allStaffs->map(function($staff) use ($dailyAttendances) {
-            return [
-                'staff' => $staff,
-                'attendance' => $dailyAttendances->firstWhere('user_id', $staff->id)
-            ];
-        });
-            return view('admin.attendance.index', compact('user','date','dailyAttendances','previous','next','calendar'));
+        $calendar = $this->attendanceService->makeDailyCalendar($allStaffs, $dailyAttendances);
+
+            return view('admin.attendance.index', compact('dailyData','dailyAttendances','calendar'));
     }
 }

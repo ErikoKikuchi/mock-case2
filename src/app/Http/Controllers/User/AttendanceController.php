@@ -11,6 +11,7 @@ use App\Models\AttendanceRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Services\AttendanceService;
 use App\Services\AttendanceStoreService;
+use App\Http\Requests\AttendanceDetailRequest;
 
 class AttendanceController extends Controller
 {
@@ -45,10 +46,7 @@ class AttendanceController extends Controller
         return view('attendance.index',compact('calendarData','calendar'));
     }
 //勤怠詳細表示
-    public function show(Request $request, $id=null){
-        $request->validate([
-            'date' => ['nullable', 'date_format:Y-m-d'],
-        ]);
+    public function show(AttendanceDetailRequest $request, $id=null){
         if(!$id && !$request->query('date')){
             abort(404);
         }

@@ -33,7 +33,7 @@
             </tr>
             @foreach($calendar as $item)
                 <tr class="attendance-list__row">
-                    <td class="attendance-list__description">{{$item['date']->locale('ja')->isoFormat('MM月DD日(ddd)')}}</td>
+                    <td class="attendance-list__description">{{$item['date']->locale('ja')->isoFormat('MM/DD(ddd)')}}</td>
                     <td class="attendance-list__description">{{$item['attendance']?->clock_in?->format('H:i')}}</td>
                     <td class="attendance-list__description">{{$item['attendance']?->clock_out?->format('H:i')}}</td>
                     <td class="attendance-list__description">{{$item['attendance']?->breakTimeDisplay}}</td>
