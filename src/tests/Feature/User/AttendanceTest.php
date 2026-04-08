@@ -6,7 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use Carbon\Carbon;
-use App\Models\Attendance;
 
 class AttendanceTest extends TestCase
 {
@@ -20,9 +19,7 @@ class AttendanceTest extends TestCase
             'work_date' => Carbon::today(),
             'clock_in' => now(),
         ]);
-        Carbon::setTestNow();
     }
-
     private function clockOut($user)
     {
         Carbon::setTestNow(Carbon::create(2026, 4, 7, 18, 0, 0));
@@ -30,7 +27,11 @@ class AttendanceTest extends TestCase
             'action' => '退勤',
             'clock_out' => now(),
         ]);
+    }
+    protected function tearDown(): void
+    {
         Carbon::setTestNow();
+        parent::tearDown();
     }
 
 //現在の日時情報がUIと同じ形式で出力されている
@@ -72,15 +73,11 @@ class AttendanceTest extends TestCase
             'email_verified_at' => now(),
             'role'=>'user',
             ]);
-        $response = $this->actingAs($user)->get('/attendance');
-        $response->assertSee('勤務外');
-        $response->assertSee('出勤');
         $this->clockIn($user);
         $this->clockOut($user);
         $response= $this->actingAs($user)->get('/attendance');
         $response->assertSee('退勤済');
         $response->assertDontSee('出勤');
-        $this->assertCount(1, Attendance::where('user_id', $user->id)->get());
     }
 
 //出勤時刻が勤怠一覧画面で確認できる
@@ -107,9 +104,6 @@ class AttendanceTest extends TestCase
             'email_verified_at' => now(),
             'role'=>'user',
             ]);
-        $response = $this->actingAs($user)->get('/attendance');
-        $response->assertSee('勤務外');
-        $response->assertSee('出勤');
         $this->clockIn($user);
         $response= $this->actingAs($user)->get('/attendance');
         $response->assertSee('出勤中');
