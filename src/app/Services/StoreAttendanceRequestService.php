@@ -34,7 +34,7 @@ class StoreAttendanceRequestService
             'after_value' => $request->clock_out,
         ]);
     //breakTimeの申請
-        foreach($request->break_start as $index => $breakStart){
+        foreach($request->break_start?? [] as $index => $breakStart){
             if(empty($breakStart)){
                 continue;
             }

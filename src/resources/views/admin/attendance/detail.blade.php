@@ -24,17 +24,17 @@
                 </tr>
                 <tr class="attendance-detail__row">
                     <th class="attendance-detail__header">出勤・退勤</th>
-                    <td class="attendance-detail__description">{{$attendance->clock_in?->format('H:i')}}</td>
+                    <td class="attendance-detail__description">{{ $attendanceRequest->clock_in_value}}</td>
                     <td class="attendance-detail__form">~</td>
                     <td class="attendance-detail__description">
-                        {{$attendance->clock_out?->format('H:i')}}</td>
+                        {{ $attendanceRequest->clock_out_value}}</td>
                 </tr>
                 @foreach($attendance->breakTimes as $breakTime)
                     <tr class="attendance-detail__row">
                         <th class="attendance-detail__header">休憩</th>
-                        <td class="attendance-detail__description">{{$breakTime->break_start?->format('H:i')}}</td>
+                        <td class="attendance-detail__description">{{$break['break_start'] }}</td>
                         <td class="attendance-detail__form">~</td>
-                        <td class="attendance-detail__description">{{$breakTime->break_end?->format('H:i')}}</td>
+                        <td class="attendance-detail__description">{{$break['break_end']}}</td>
                     </tr>
                 @endforeach
                 <tr class="attendance-detail__row">

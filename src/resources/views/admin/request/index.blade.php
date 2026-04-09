@@ -62,7 +62,7 @@
                         </td>
                         <td class="request-index__description">
                             <div>
-                                <a class="request-detail__button" href="{{route('request.approve.detail',['attendance_correct_request_id'=>$item->attendance->id])}}">詳細</a>
+                                <a class="request-detail__button" href="{{route('request.approve.detail',['attendance_correct_request_id'=>$item->id])}}">詳細</a>
                             </div>
                         </td>
                     </tr>

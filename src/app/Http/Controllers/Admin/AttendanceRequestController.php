@@ -53,10 +53,10 @@ class AttendanceRequestController extends Controller
     {
         $user = Auth::user();
 
-        $attendance=Attendance::findOrFail($attendance_correct_request_id);
-        $user = User::findOrFail($attendance->user_id);
+        $attendanceRequest=AttendanceRequest::findOrFail($attendance_correct_request_id);
 
-        $attendanceRequest = AttendanceRequest::latestByAttendance($attendance);
+        $attendance = Attendance::findOrFail($attendanceRequest->attendance_id);
+        $user = User::findOrFail($attendance->user_id);
 
         $attendanceRequest?->load('requestItems');
 
