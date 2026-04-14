@@ -90,22 +90,22 @@ class Attendance extends Model
     protected function workTimeDisplay():Attribute
     {
         return Attribute::make(
-        get: function () {
-            $minutes = $this->total_work_minutes;
-            if ($minutes === null) return '--:--';
-            return sprintf('%d:%02d', intdiv($minutes, 60), $minutes % 60);
-        }
+            get: function () {
+                $minutes = $this->total_work_minutes;
+                if ($minutes === null) return '--:--';
+                return sprintf('%d:%02d', intdiv($minutes, 60), $minutes % 60);
+            }
     );
     }
     //休憩時間表示設定
     protected function breakTimeDisplay():Attribute
     {
         return Attribute::make(
-        get: function () {
-            $minutes = $this->total_break_minutes;
-            if ($minutes === 0) return '--:--';
-            return sprintf('%d:%02d', intdiv($minutes, 60), $minutes % 60);
-        }
+            get: function () {
+                $minutes = $this->total_break_minutes;
+                if ($minutes === 0) return '--:--';
+                return sprintf('%d:%02d', intdiv($minutes, 60), $minutes % 60);
+            }
     );
     }
 

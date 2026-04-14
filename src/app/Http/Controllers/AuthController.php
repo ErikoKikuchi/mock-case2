@@ -18,6 +18,7 @@ class AuthController extends Controller
 {
 //サービス
     public function __construct(private AttendanceService $attendanceService) {}
+
 //登録関係
     public function register(RegisterRequest $request){
         $data=$request->validated();
@@ -29,6 +30,7 @@ class AuthController extends Controller
         auth()->login($user);
         return redirect()->route('verification.notice');
     }
+
 //ログイン関係
     public function login(LoginRequest $request)
         {
@@ -114,6 +116,7 @@ class AuthController extends Controller
 
         return view('attendance.register', compact('user','attendance','status','date','attendanceButtons','breakTimeButtons'));
     }
+
 //管理者勤怠一覧画面表示
     public function index(Request $request){
         $request->validate([

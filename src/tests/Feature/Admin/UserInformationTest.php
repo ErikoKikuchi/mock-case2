@@ -139,9 +139,10 @@ class UserInformationTest extends TestCase
 
         $attendance=$this->createAttendanceWithBreakTime($user);
         $attendanceId=$attendance->id;
-        $response = $this->actingAs($admin)->get(route('admin.attendance.detail'),['id'=>$attendanceId]);
+        $response = $this->actingAs($admin)->get(route('admin.attendance.detail',['id'=>$attendanceId]));
         $response->assertSee('9:00');
         $response->assertSee('18:00');
-        $response->assertSee(Carbon::today());
+        $response->assertSee(Carbon::today()->format('Y年'));
+        $response->assertSee(Carbon::today()->format('n月j日'));
     }
 }

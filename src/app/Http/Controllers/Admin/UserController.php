@@ -13,6 +13,7 @@ class UserController extends Controller
 {
 //カレンダーサービスクラス
     public function __construct(private AttendanceService $attendanceService) {}
+
 //管理者用スタッフ一覧
     public function index(Request $request)
     {
@@ -20,6 +21,7 @@ class UserController extends Controller
         $staffs=User::where('role','user')->get();
         return view ('admin.users.index',compact('staffs'));
     }
+
 //管理者用各スタッフの勤怠一覧(月次勤怠)
     public function show(Request $request,$id)
     {
@@ -38,6 +40,7 @@ class UserController extends Controller
 
         return view('admin.users.attendance',compact('calendarData','calendar','name'));
     }
+
 //CSV
     public function exportCsv(Request $request ,$id){
     //ユーザーを指定してデータの取得

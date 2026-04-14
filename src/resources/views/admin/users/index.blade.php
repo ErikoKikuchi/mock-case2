@@ -9,7 +9,7 @@
 @section('content')
 <div class="content">
     <div class="admin-content">
-        <div class="staff-index__title">| スタッフ一覧</div>
+        <h1 class="staff-index__title">| スタッフ一覧</h1>
         <div class="staff-index__inner">
             <table class="staff-index">
                 <tr class ="staff-index__row">

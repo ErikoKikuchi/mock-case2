@@ -9,7 +9,7 @@
 @section('content')
 <div class="content">
     <div class="attendance-detail">
-        <div class="attendance-detail__title">| 勤怠詳細</div>
+        <h1 class="attendance-detail__title">| 勤怠詳細</h1>
         <form class="attendance-detail__inner" action="{{route('update.attendance')}}" method="post">@csrf
             <table class="attendance-detail__table">
                 <tr class="attendance-detail__row">

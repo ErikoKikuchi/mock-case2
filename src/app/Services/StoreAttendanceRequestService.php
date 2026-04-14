@@ -18,6 +18,7 @@ class StoreAttendanceRequestService
             'status' => $user->role === 'admin' ? 'approved' : 'pending',
             'corrected_by' => $user->role === 'admin' ? $user->id : null,
             'attendance_id' => $attendance->id, 
+            'requested_by'=>$user->id,
         ]);
     //clock_inの申請
         $attendanceRequest->requestItems()->create([

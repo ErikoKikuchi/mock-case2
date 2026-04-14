@@ -21,6 +21,7 @@ class AttendanceRequest extends Model
         'approved_by',
         'approved_at',
         'corrected_by',
+        'requested_by',
     ];
 
     protected $casts = ['approved_at' => 'datetime'];

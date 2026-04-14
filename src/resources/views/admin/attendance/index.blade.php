@@ -9,7 +9,7 @@
 @section('content')
 <div class="content">
     <div class ="attendance-list">
-        <div class="admin-attendance-list__title">| {{$dailyData['date']->format('Y年m月d日')}}の勤怠 </div>
+        <h1 class="admin-attendance-list__title">| {{$dailyData['date']->format('Y年m月d日')}}の勤怠 </h1>
         <div class="attendance-list__day">
             <div class="attendance-list__previous">
                 <a class="previous__day" href="{{route('attendance.list',['day'=>$dailyData['previous']->toDateString()])}}">←前日</a>
@@ -50,5 +50,4 @@
         </table>
     </div>
 </div>
-
 @endsection

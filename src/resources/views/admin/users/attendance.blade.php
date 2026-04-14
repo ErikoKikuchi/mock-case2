@@ -14,7 +14,7 @@
         </div>
     @endif
     <div class ="attendance-list">
-        <div class="staff-attendance__title">| {{$name->name}}さんの勤怠 </div>
+        <h1 class="staff-attendance__title">| {{$name->name}}さんの勤怠 </h1>
         <div class="attendance-list__month">
             <div class="attendance-list__previous">
                 <a class="previous__month" href="{{route('each.staff.attendance',['id' => $name->id, 'month'=>$calendarData['previous']->format('Y-m')])}}">←前月</a>

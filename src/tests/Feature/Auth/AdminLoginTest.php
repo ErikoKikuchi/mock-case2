@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AdminLoginTest extends TestCase
@@ -41,7 +40,7 @@ class AdminLoginTest extends TestCase
     {
         $user = [
             'email' => 'user2@example.com',
-            'password' => Hash::make('password123'),
+            'password' => 'password123',
         ];
         $response = $this->from('/admin/login')->post('/admin/login', $user);
         $response->assertSessionHasErrors([

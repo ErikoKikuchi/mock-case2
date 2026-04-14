@@ -9,7 +9,7 @@
 @section('content')
 <div class="content">
     <div class="attendance-list">
-        <div class="attendance-list__title">| 勤怠一覧</div>
+        <h1 class="attendance-list__title">| 勤怠一覧</h1>
         <div class="attendance-list__month">
             <div class="attendance-list__previous">
                 <a class="previous__month" href="{{route('users.attendance.list',['month'=>$calendarData['previous']->format('Y-m')])}}">←前月</a>

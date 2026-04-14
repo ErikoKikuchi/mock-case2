@@ -14,7 +14,7 @@
                 <p class="message">{{session('message')}}</p>
             </div>
         @endif
-        <div class="request-index__title">| 申請一覧</div>
+        <h1 class="request-index__title">| 申請一覧</h1>
         <div class="tab-group">
             <div class="index-tab {{ request('tab','pending')==='pending'?'active':''}}">
                 <a class="index__link "href="{{route('users.request.list',['tab'=>'pending'])}}">承認待ち</a>

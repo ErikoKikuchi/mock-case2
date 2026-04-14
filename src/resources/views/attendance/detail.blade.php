@@ -9,7 +9,7 @@
 @section('content')
 <div class="content">
     <div class="attendance-detail">
-        <div class="attendance-detail__title">| 勤怠詳細</div>
+        <h1 class="attendance-detail__title">| 勤怠詳細</h1>
         @if($attendanceRequest && $attendanceRequest->statusLabel === '申請中')
             <table class="attendance-detail__table">
                 <tr class="attendance-detail__row">

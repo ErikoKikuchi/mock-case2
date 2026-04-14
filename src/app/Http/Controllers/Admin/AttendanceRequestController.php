@@ -11,6 +11,7 @@ use App\Services\ApproveAttendanceService;
 use App\Models\Attendance;
 use App\Models\User;
 use App\Models\AttendanceRequest;
+use Carbon\Carbon;
 
 class AttendanceRequestController extends Controller
 {
@@ -48,6 +49,7 @@ class AttendanceRequestController extends Controller
 
         return view ('admin.request.index',compact('user','tab','requestItems'));
     }
+
 //管理者用承認画面
     public function show(Request $request, $attendance_correct_request_id=null)
     {
@@ -62,9 +64,11 @@ class AttendanceRequestController extends Controller
 
         return view ('admin.request.approve',compact('user','attendance','attendanceRequest'));
     }
+
 //管理者用承認処理
     public function update(Request $request)
     {
+        $user = Auth::user();
         Attendance::findOrFail($request->attendance_id);
         $attendanceRequest = AttendanceRequest::findOrFail($request->attendance_request_id);
 
@@ -74,7 +78,11 @@ class AttendanceRequestController extends Controller
 
         $this->approveAttendanceService->approveAttendance(['attendanceRequest' => $attendanceRequest]);
 
-        $attendanceRequest->update(['status' => 'approved']);
+        $attendanceRequest->update([
+            'status' => 'approved',
+            'approved_by'=>$user->id,
+            'approved_at'=>Carbon::now(),
+            ]);
 
         return redirect()
             ->route('request.list')

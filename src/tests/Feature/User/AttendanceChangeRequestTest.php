@@ -54,6 +54,7 @@ class AttendanceChangeRequestTest extends TestCase
                 'user_id' => $user->id,
                 'reason'=>'テスト',
                 'status'=>'pending',
+                'requested_by' => $user->id,
                 ]);
             RequestItem::factory()->create([
                 'request_id'=>$attendanceRequest->id,
@@ -81,6 +82,7 @@ class AttendanceChangeRequestTest extends TestCase
                 'user_id'       => $user->id,
                 'reason'        => 'テスト',
                 'status'        => 'approved',
+                'requested_by' => $user->id,
                 'approved_by'   => $adminUser->id,
                 'approved_at'   => Carbon::now(),
             ]);
@@ -231,8 +233,12 @@ class AttendanceChangeRequestTest extends TestCase
         $response = $this->actingAs($user)->get(route('users.request.list',['tab'=>'approved']));
         $response->assertSee('テスト');
         $response->assertSee(Carbon::today()->subDays(1)->format('n月j日'));
+        $response->assertSee(Carbon::today()->subDays(2)->format('n月j日'));
         $response->assertSee(Carbon::today()->subDays(3)->format('n月j日'));
+        $response->assertSee(Carbon::today()->subDays(4)->format('n月j日'));
         $response->assertSee(Carbon::today()->subDays(5)->format('n月j日'));
+        $response->assertSee(Carbon::today()->subDays(6)->format('n月j日'));
+        $response->assertSee(Carbon::today()->subDays(7)->format('n月j日'));
         $this->assertDatabaseCount('attendances', 7);
     }
 

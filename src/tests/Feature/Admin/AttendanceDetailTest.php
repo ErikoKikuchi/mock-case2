@@ -12,7 +12,6 @@ use Carbon\Carbon;
 class AttendanceDetailTest extends TestCase
 {
     use RefreshDatabase;
-    use RefreshDatabase;
 
     private function createUser(): User
     {
@@ -61,7 +60,7 @@ class AttendanceDetailTest extends TestCase
         $response = $this->actingAs($admin)->get(route('attendance.list'));
         $response->assertSee($user->name);
         $response->assertSee('09:00');
-        $response = $this->actingAs($admin)->get(route('admin.attendance.detail'),['id'=>$attendanceId]);
+        $response = $this->actingAs($admin)->get(route('admin.attendance.detail',['id'=>$attendanceId]));
         $response->assertSee($user->name);
         $response->assertSee('09:00');
     }
