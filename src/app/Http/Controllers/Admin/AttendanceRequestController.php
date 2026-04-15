@@ -21,10 +21,11 @@ class AttendanceRequestController extends Controller
         ){}
 
 //管理者申請
-    public function create(AdminAttendanceChangeRequest $request){
+    public function store(AdminAttendanceChangeRequest $request){
         $attendance = Attendance::findOrFail($request->attendance_id);
 
         $data=$this->storeAttendanceRequestService->storeAttendanceRequest($request,$attendance);
+        $data['approved_by'] = Auth::user()->id;
 
         $this->approveAttendanceService->approveAttendance($data);
 

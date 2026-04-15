@@ -36,7 +36,7 @@ class ApproveAttendanceService
         }
         $attendanceRequest->update([
             'status' => 'approved',
-            'approved_by'=>$user->id,
+            'approved_by'=>$user,
             'approved_at'=>Carbon::now(),
             ]);
     }

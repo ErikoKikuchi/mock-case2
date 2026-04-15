@@ -19,21 +19,21 @@
   
 ## Laravel環境構築  
 - docker compose exec php bash  
-- composer install  
-- 開発環境を立ち上げる場合はcomposer create-project "laravel/laravel=12.*" . --prefer-dist  
+- 【PHPコンテナ内】composer install  
+- 【PHPコンテナ内】開発環境を立ち上げる場合はcomposer create-project "laravel/laravel=12.*" . --prefer-dist  
 - 開発環境では Asia/Tokyo に設定済  
-- 必要あれば権限設定　sudo chmod -R 777 src/*(windowsの場合)  
-- cp .env.example .env  
+- 【rootディレクトリ】必要あれば権限設定　sudo chmod -R 777 src/*(windowsの場合)  
+- 【PHPコンテナ内】cp .env.example .env  
 （DB_CONNECTION=mysql,DB_HOST=mysql, DB_DATABASE=laravel_db, DB_USERNAME=laravel_user, DB_PASSWORD=laravel_pass）  
-- php artisan key:generate  
-- php artisan migrate  
-- php artisan db:seed  
+- 【PHPコンテナ内】php artisan key:generate  
+- 【PHPコンテナ内】php artisan migrate  
+- 【PHPコンテナ内】php artisan db:seed  
 - このプロジェクトではviteを使用しています。フロントエンドのビルドには Node.js と npm が必要です。Node.js / npm のインストールおよび `npm install` はホスト環境（srcディレクトリ）で行ってください。(package.jsonはsrcディレクトリにあります。)  
-- curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -  
-- sudo apt-get install -y nodejs  
-- npm install  
+- 【rootディレクトリ】curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -  
+- 【rootディレクトリ】sudo apt-get install -y nodejs  
+- 【srcディレクトリ】npm install  
 - vite.config.js で build.outDir を設定（vite.config.jsからの相対パス）,app.jsに読み込むファイルを設定  
-- npm run dev(開発環境のため、srcディレクトリで実施)  
+- 【srcディレクトリ】npm run dev(開発環境のため、srcディレクトリで実施)  
   
 ## メール認証について
 - 本アプリでは、開発環境におけるメール送信確認のためにMailtrap の Email Sandbox を使用しています。  
