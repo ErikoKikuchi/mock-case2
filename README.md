@@ -28,7 +28,6 @@
 - php artisan key:generate  
 - php artisan migrate  
 - php artisan db:seed  
-- php artisan storage:link  
 - このプロジェクトではviteを使用しています。フロントエンドのビルドには Node.js と npm が必要です。Node.js / npm のインストールおよび `npm install` はホスト環境（srcディレクトリ）で行ってください。(package.jsonはsrcディレクトリにあります。)  
 - curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -  
 - sudo apt-get install -y nodejs  
