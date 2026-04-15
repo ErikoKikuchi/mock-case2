@@ -85,7 +85,6 @@ Laravelのセッション構造上、同一ブラウザでは1セッションの
 - php artisan key:generate --env=testing  
 - php artisan migrate --env=testing  
 - phpunit.xmlの編集（env name="DB_CONNECTION" value="mysql_test"/, env name="DB_DATABASE" value="demo_test"/）  
-- php artisan storage:link  
 - php artisan test  
 - このプロジェクトではviteを使用しています。テスト実行時に `public/build/manifest.json` が必要ですが、本プロジェクトでは testing 環境では Vite を読み込まない構成にしているため、テスト実行のために npm build を行う必要はありません。  
 

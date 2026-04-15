@@ -44,6 +44,13 @@
     width:30%;
     text-align: center;
 }
+.description__input
+{
+    display:flex;
+    text-align: center;
+    align-items: center;
+}
+
 .attendance-detail__form{
     text-align: center;
     font-size: 24px;
@@ -75,6 +82,8 @@
 }
 .description__input{
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 .textarea__form{
     width:80%;
@@ -89,6 +98,13 @@
     border-radius: 5px;
 }
 .error{
+    text-align: left;
+    width:80%;
+    align-items: center;
+    padding-left: 50px;
+}
+.error__textarea
+{
     text-align: left;
     width:80%;
     align-items: center;

@@ -116,24 +116,32 @@
                     <tr class="attendance-detail__row">
                         <th class="attendance-detail__header">休憩{{$breakTime->count() + 1}}</th>
                         <td class="attendance-detail__description">
+                            <div class="description__input">
                             <input class="break-time__form" type="time" name="break_start[]" value="{{old('break_start.'.$breakTime->count())}}">
+                            <div class="error">
                             @error('break_start.'.$breakTime->count())
                                 <span class="error-message">{{ $message }}</span>
                             @enderror
+                            </div>
+                            </div>
                         </td>
                         <td class="attendance-detail__form">~</td>
                         <td class="attendance-detail__description">
+                            <div class="description__input">
                             <input class="break-time__form" type="time" name="break_end[]" value="{{old('break_end.'.$breakTime->count())}}">
+                            <div class="error">
                             @error('break_end.'.$breakTime->count())
                                 <span class="error-message">{{ $message }}</span>
                             @enderror
+                            </div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="attendance-detail__row">
                         <th class="attendance-detail__header">備考</th>
                         <td class="attendance-detail__description" colspan="3">
                             <textarea class="textarea__form" name="reason">{{old('reason',$attendanceRequest?->reason)}}</textarea>
-                            <div class="error">
+                            <div class="error__textarea">
                                 @error('reason')
                                     <span class="error-message">{{ $message }}</span>
                                 @enderror

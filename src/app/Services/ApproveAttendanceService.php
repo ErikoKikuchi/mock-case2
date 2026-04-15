@@ -25,11 +25,20 @@ class ApproveAttendanceService
                     BreakTime::where('id', $item->break_id)
                         ->update([$item->column_name => $item->after_value]);
                 } else {
-                    if($item->column_name === 'break_start'){
+                    if ($item->column_name === 'break_start') {
                         BreakTime::create([
                             'attendance_id' => $item->attendance_id,
                             'break_start' => $item->after_value,
                         ]);
+                    } elseif ($item->column_name === 'break_end') {
+                        $breakTime = BreakTime::where('attendance_id', $item->attendance_id)
+                            ->whereNull('break_end')
+                            ->latest()
+                            ->first();
+
+                        if ($breakTime) {
+                            $breakTime->update(['break_end' => $item->after_value]);
+                        }
                     }
                 }
             }

@@ -19,7 +19,6 @@ export default defineConfig({
                 'resources/js/users/register.js',
                 'resources/js/users/request-index.js',
                 'resources/js/users/verify-email.js',
-                'resources/js/admin.js',
                 'resources/js/common.js',
             ],
             refresh: true,
