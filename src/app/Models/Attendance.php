@@ -70,7 +70,7 @@ class Attendance extends Model
         return Attribute::make(
             get: fn() => $this->breakTimes
             ->filter(fn($break) => $break->break_start && $break->break_end)
-            ->sum(fn($break) => Carbon::parse($break->break_start)->diffInMinutes(Carbon::parse($break->break_end)))
+            ->sum(fn($break) => (int)Carbon::parse($break->break_start)->diffInMinutes(Carbon::parse($break->break_end)))
             );
     }
 
@@ -82,7 +82,7 @@ class Attendance extends Model
         // 出勤・退勤どちらかが未記録なら計算不可
             if (!$this->clock_in || !$this->clock_out) return null;
 
-            return $this->clock_in->diffInMinutes($this->clock_out) - $this->total_break_minutes;
+            return (int)$this->clock_in->diffInMinutes($this->clock_out) - $this->total_break_minutes;
             }
         );
     }

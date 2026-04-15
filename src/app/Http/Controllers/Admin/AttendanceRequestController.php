@@ -11,7 +11,6 @@ use App\Services\ApproveAttendanceService;
 use App\Models\Attendance;
 use App\Models\User;
 use App\Models\AttendanceRequest;
-use Carbon\Carbon;
 
 class AttendanceRequestController extends Controller
 {
@@ -76,12 +75,9 @@ class AttendanceRequestController extends Controller
             return redirect()->back()->with('message', 'すでに承認済みです');
         }
 
-        $this->approveAttendanceService->approveAttendance(['attendanceRequest' => $attendanceRequest]);
-
-        $attendanceRequest->update([
-            'status' => 'approved',
+        $this->approveAttendanceService->approveAttendance([
+            'attendanceRequest' => $attendanceRequest,
             'approved_by'=>$user->id,
-            'approved_at'=>Carbon::now(),
             ]);
 
         return redirect()

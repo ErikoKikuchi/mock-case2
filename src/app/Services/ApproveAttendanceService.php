@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\Models\Attendance;
 use App\Models\BreakTime;
+use Carbon\Carbon;
 
 class ApproveAttendanceService
 {
     public function approveAttendance($data)
     {
+        $user = $data['approved_by'];
         $attendanceRequest = $data['attendanceRequest'];
         $items = $attendanceRequest->requestItems; 
 
@@ -32,5 +34,10 @@ class ApproveAttendanceService
                 }
             }
         }
+        $attendanceRequest->update([
+            'status' => 'approved',
+            'approved_by'=>$user->id,
+            'approved_at'=>Carbon::now(),
+            ]);
     }
 }
