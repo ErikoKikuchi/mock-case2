@@ -1,1 +1,1 @@
-import '../../css/admin/attendance-detail.css';
+import '../../css/users/attendance-detail.css';

@@ -73,12 +73,11 @@
     align-items: end;
 }
 .attendance-detail__textarea{
-    text-align: left;
+    text-align: center;
     padding-left:20px;
     color: black;
     font-weight: bold;
     font-size: 18px;
-    text-align: center;
 }
 .description__input{
     text-align: center;
@@ -103,8 +102,7 @@
     align-items: center;
     padding-left: 50px;
 }
-.error__textarea
-{
+.error__textarea{
     text-align: left;
     width:80%;
     align-items: center;

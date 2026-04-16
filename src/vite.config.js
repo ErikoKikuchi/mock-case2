@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/admin/user-attendance.js',
                 'resources/js/admin/user-index.js',
                 'resources/js/users/attendance-detail.js',
+                'resources/js/users/attendance-register.js',
                 'resources/js/users/attendance-index.js',
                 'resources/js/users/login.js',
                 'resources/js/users/register.js',
